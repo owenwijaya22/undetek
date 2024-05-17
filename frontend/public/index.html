@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>OTP Fetcher</title>
+        <style>
+            #text-2932759596 {
+                font-size: 1.35rem;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>OTP Display</h1>
+        <div id="text-2932759596" class="text">
+            <p class="lead">
+                Pin:
+                <span
+                    class="undetected"
+                    id="getpin"
+                    style="color: Tomato; font-weight: bold; max-height: 50px;"
+                ></span>
+            </p>
+        </div>
+
+        <script type="text/javascript">
+            function fetchAndUpdateOTP() {
+                const url = "https://undetek-server.vercel.app/api/v1/password";
+                fetch(url)
+                    .then((response) => response.text())
+                    .then((data) => {
+                        document.getElementById(
+                            "getpin"
+                        ).innerText = data.trim();
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching OTP:", error);
+                        document.getElementById("getpin").innerText =
+                            "Failed to fetch OTP";
+                    });
+            }
+
+            // Set the interval for updating the OTP every 3 seconds
+            setInterval(fetchAndUpdateOTP, 3000);
+
+            // Fetch the OTP immediately when the page loads
+            fetchAndUpdateOTP();
+        </script>
+    </body>
+</html>
